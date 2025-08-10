@@ -51,8 +51,8 @@ Build options (env vars):
 
 ### Original CLI usage
 ```bash
-make hv_orig.exe
-./hv_orig.exe -f examples/model.txt -fmin 0.1 -fmax 100 -nf 100 -logsam -nmr 3 -nml 3 -prec 1.0 -nks 0 -ph -hv > HV.dat
+make hv_orig
+./hv_orig -f examples/model.txt -fmin 0.1 -fmax 100 -nf 100 -logsam -nmr 3 -nml 3 -prec 1.0 -nks 0 -ph -hv > HV.dat
 # Outputs: Rph.dat (Rayleigh slowness), Lph.dat (Love slowness), HV.dat (freq, hv)
 ```
 
