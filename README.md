@@ -125,4 +125,4 @@ Troubleshooting imports in notebooks:
 - `make clean` removes executables, build artifacts, and Python extension outputs.
 
 ### License
-See `LICENSE`.
+This project is licensed under the MIT License. See `LICENSE` for details.
