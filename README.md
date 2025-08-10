@@ -9,7 +9,7 @@ Fortran implementation of H/V spectral ratio and surface-wave dispersion, with a
 - `HV.f90`: Original CLI program (reference)
 - `hv_api.f90`: Public API module used by Python
 - Core Fortran sources: `modules.f90`, `aux_procedures.f90`, `dispersion_solver.f90`, `root_solver.f90`, `dispersion_equation.f90`, `greens_rayleigh.f90`, `greens_love.f90`, `rayleigh_mode.f90`, `love_mode.f90`, `bodywave_integrals.f90`
-- Python build: `setup.py` (builds `hvdfa`), `hvdfa.pyf` (explicit f2py interface)
+- Python build: `setup.py` (builds `HVSWDpy`), `hvdfa.pyf` (explicit f2py interface)
 - Examples:
   - `examples/hv_quickstart.py`: basic H/V usage
   - `examples/compare_model_both.py`: compare HV and dispersion (CLI vs API) using `examples/model.txt`
@@ -52,33 +52,21 @@ make hv_orig.exe
 ### Python API
 - H/V (no normalization; matches CLI default)
   ```python
-  import numpy as np, hvdfa
+  import numpy as np
+  import hvswdpy as hv
   vp = np.array([300., 1500.]); vs = np.array([150., 800.])
   rho = np.array([1800., 2200.]); thickness = np.array([20.])
   f = np.logspace(-1, 2, 100)  # log-spaced to match CLI -logsam
-  hv, status = hvdfa.hv_dfa_api.hv_compute_f2py(
-      nf=f.size, nl=vp.size, frequencies_hz=f,
-      vp_in=vp, vs_in=vs, rho_in=rho, thickness_in=thickness,
-      n_rayleigh_modes=3, n_love_modes=3, precision_percent=1.0, nks=0
-  )
+  hv_curve, status = hv.hv(f, vp, vs, rho, thickness)
   ```
 - Components
   ```python
-  img11_total, img33_total, img11_ray, img11_love, imvv, imhpsv, imhsh, status = \
-      hvdfa.hv_dfa_api.hv_compute_components_f2py(
-          nf=f.size, nl=vp.size, frequencies_hz=f,
-          vp_in=vp, vs_in=vs, rho_in=rho, thickness_in=thickness,
-          n_rayleigh_modes=3, n_love_modes=3, precision_percent=1.0, nks=0
-      )
+  comps = hv.hv_components(f, vp, vs, rho, thickness)
   ```
 - Dispersion (convert slowness to velocity via 1/slowness)
   ```python
-  r_slow, r_valid, l_slow, l_valid, status = hvdfa.hv_dfa_api.hv_compute_dispersion_f2py(
-      nf=f.size, nl=vp.size, frequencies_hz=f,
-      vp_in=vp, vs_in=vs, rho_in=rho, thickness_in=thickness,
-      n_rayleigh_modes=3, n_love_modes=3, precision_percent=1.0
-  )
-  rayleigh_vel_mode1 = 1.0 / r_slow[r_valid[:, 0] != 0, 0]
+  disp = hv.dispersion(f, vp, vs, rho, thickness)
+  rayleigh_vel_mode1 = 1.0 / disp.rayleigh_slowness[disp.rayleigh_valid[:, 0] != 0, 0]
   ```
 
 ### Examples
