@@ -8,15 +8,13 @@ dispersion and components.
 - **Modifications and API**: Shihao Yuan (`syuan@mines.edu`)
 
 ### Repository layout
-- `HV.f90`: Original CLI program (reference)
-- `hv_api.f90`: Public Fortran API module used by Python
-- Core Fortran sources: `modules.f90`, `aux_procedures.f90`, `dispersion_solver.f90`, `root_solver.f90`, `dispersion_equation.f90`, `greens_rayleigh.f90`, `greens_love.f90`, `rayleigh_mode.f90`, `love_mode.f90`, `bodywave_integrals.f90`
-- Python build: `setup.py` (builds compiled module `HVSWDpy`), `hvdfa.pyf` (explicit f2py interface)
-- Python wrapper module: `hvswdpy.py` (imports `HVSWDpy.hv_dfa_api` and provides a friendly API)
-- Examples:
-  - `examples/hv_quickstart.py`: basic H/V usage
-  - `examples/compare_model_both.py`: compare HV and dispersion (CLI vs API) using `examples/model.txt`
-- Outputs: `results/` (plots, comparisons)
+- `src/hvswdpy/`: Python package (wrapper)
+- `src/hvswdpy/_fortran/`: Fortran sources and f2py interface (`hvdfa.pyf`)
+- `src/cli/`: Fortran CLI sources (`HV.f90`, `cli_args*.f90`, optional drivers)
+- `src/Makefile`: build targets (`hv_orig`, `python`, `python-dev`)
+- `bin/`: built CLI executable (`bin/hv_orig`)
+- `examples/`: scripts and notebooks
+- `examples/results/`: output plots
 
 ### Requirements
 - gfortran (OpenMP-capable recommended)
@@ -33,12 +31,12 @@ dispersion and components.
   - Python extension and wrapper:
     ```bash
     cd src
-    make python          # builds extension in place via setup.py in repo root
+    make python          
     ```
 - From `src/` as an alternative (Python build only):
   ```bash
   cd src
-  python -m pip install -e .  # editable install using setup.py in src/
+  python -m pip install -e .  
   ```
 
 Build options (env vars):
@@ -55,9 +53,12 @@ Build options (env vars):
 
 ### Original CLI usage
 ```bash
-make hv_orig
-./hv_orig -f examples/model.txt -fmin 0.1 -fmax 100 -nf 100 -logsam -nmr 3 -nml 3 -prec 1.0 -nks 0 -ph -hv > HV.dat
-# Outputs: Rph.dat (Rayleigh slowness), Lph.dat (Love slowness), HV.dat (freq, hv)
+# Build from src/
+cd src && make hv_orig   # creates ../bin/hv_orig
+
+# Run from repo root
+bin/hv_orig -f examples/model.txt -fmin 0.1 -fmax 100 -nf 100 -logsam -nmr 3 -nml 3 -prec 1.0 -nks 0 -ph -hv > examples/HV.dat
+# Outputs in examples/: Rph.dat (Rayleigh slowness), Lph.dat (Love slowness), HV.dat (freq, hv)
 ```
 
 ### Python API (no normalization; matches CLI default)
@@ -107,13 +108,13 @@ Troubleshooting imports in notebooks:
   ```bash
   python examples/hv_quickstart.py
   ```
-- Compare HV and dispersion (CLI vs API) — generates plots into `results/`:
+- Compare HV and dispersion (CLI vs API) — generates plots into `examples/results/`:
   ```bash
   python examples/compare_model_both.py
   ```
-  - `results/compare_hv.png`
-  - `results/compare_rayleigh_dispersion.png` (phase velocity vs frequency)
-  - `results/compare_love_dispersion.png` (if Love modes requested)
+  - `examples/results/compare_hv.png`
+  - `examples/results/compare_rayleigh_dispersion.png` (phase velocity vs frequency)
+  - `examples/results/compare_love_dispersion.png` (if Love modes requested)
 
 - Bayesian inversion (BayesBay) example notebook:
   - `examples/BayesBay/BayesBay.ipynb` : demonstrates joint inversion of Rayleigh
