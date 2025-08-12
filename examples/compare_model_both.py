@@ -88,13 +88,13 @@ def main():
     # Inputs
     model_file = SCRIPT_DIR / 'model.txt'
     nf = 100
-    fmin, fmax = 0.1, 100.0
-    nmr, nml = 3, 3
-    prec = 1.0
+    fmin, fmax = 0.1, 10.0
+    nmr, nml = 20, 20
+    prec = 0.0001
     nks = 0
 
-    # Ensure results dir at repo root
-    results_dir = ROOT / 'results'
+    # Ensure results dir under examples/
+    results_dir = SCRIPT_DIR / 'results'
     results_dir.mkdir(parents=True, exist_ok=True)
 
     # Read model
@@ -104,7 +104,7 @@ def main():
     freq = np.logspace(np.log10(fmin), np.log10(fmax), nf)
 
     # Run CLI
-    run_cli(model_file, nf=nf, fmin=fmin, fmax=fmax, nmr=nmr, nml=nml, prec=prec, nks=nks)
+    # run_cli(model_file, nf=nf, fmin=fmin, fmax=fmax, nmr=nmr, nml=nml, prec=prec, nks=nks)
     # Read CLI HV
     f_cli, hv_cli = read_cli_hv(SCRIPT_DIR / 'HV.dat')
     # Read CLI dispersion
@@ -142,6 +142,7 @@ def main():
     plt.figure(figsize=(9, 6))
     plt.semilogx(f_cli, hv_cli, 'k-', lw=2, label='CLI HV')
     plt.semilogx(f_plot, hv_py_plot, 'r--', lw=2, label='API HV')
+    plt.xlim(1, 5)
     plt.xlabel('Frequency (Hz)')
     plt.ylabel('H/V amplitude')
     plt.grid(True, alpha=0.3)

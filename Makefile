@@ -43,9 +43,9 @@ PYTHON_SETUP = setup.py
 # Build both targets
 all: hv_orig python
 
-# Original FORTRAN codes: includes files internally, so it can be built standalone
-hv_orig: HV.f90
-	$(FC) $(FFLAGS) -ffree-form $< -o $@ $(LDFLAGS)
+# Original FORTRAN CLI: sources moved under src/cli/, includes modules from src/hvswdpy/_fortran
+hv_orig: src/cli/HV.f90
+	$(FC) $(FFLAGS) -ffree-form -Isrc/hvswdpy/_fortran $< -o $@ $(LDFLAGS)
 
 # Python wrapper: build the hvdfa extension
 python: $(PYTHON_SETUP)

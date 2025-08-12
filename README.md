@@ -112,7 +112,7 @@ Troubleshooting imports in notebooks:
   - `results/compare_love_dispersion.png` (if Love modes requested)
 
 - Bayesian inversion (BayesBay) example notebook:
-  - `examples/BayesBay/BayesBay.ipynb` (and `BayesBay_fixed.ipynb`): demonstrates joint inversion of Rayleigh
+  - `examples/BayesBay/BayesBay.ipynb` : demonstrates joint inversion of Rayleigh
     dispersion and HVSR using a Voronoi1D Vs model.
   - Notes:
     - Use `from bayesbay.likelihood import Target, LogLikelihood` (current BayesBay API)

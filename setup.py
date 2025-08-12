@@ -54,9 +54,11 @@ extra_compile_args.append("-ffree-form")
 if _bool_env("DEBUG_F2PY", False):
     extra_compile_args.extend(["-O0", "-g", "-fcheck=all", "-fbacktrace"]) 
 
+FORTRAN_DIR = ROOT / "src" / "hvswdpy" / "_fortran"
+
 ext = Extension(
     name="HVSWDpy",
-    sources=[str(ROOT / "hvdfa.pyf")] + [str(ROOT / s) for s in sources],
+    sources=[str(FORTRAN_DIR / "hvdfa.pyf")] + [str(FORTRAN_DIR / s) for s in sources],
     extra_f77_compile_args=extra_compile_args,
     extra_f90_compile_args=extra_compile_args,
     extra_link_args=extra_link_args,
@@ -64,13 +66,16 @@ ext = Extension(
 
 
 setup(
-    name="HVSWDpy",
+    name="hvswdpy",
     version="0.1.0",
-    description="SWD-HV-DFA Fortran API for Surface Wave Dispersion and H/V spectral ratios",
+    description="HV-SWD-DFA Fortran API and Python wrapper for dispersion and H/V",
     author="Shihao Yuan",
     author_email="syuan@mines.edu",
     url="",
+    package_dir={"": "src"},
+    packages=["hvswdpy"],
     ext_modules=[ext],
+    include_package_data=True,
 )
 
 
