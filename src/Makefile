@@ -8,6 +8,7 @@
 FC=gfortran
 OPT ?= -O2
 USE_OPENMP ?= 1
+MODDIR = src/hvswdpy/_fortran
 
 ifeq ($(USE_OPENMP),1)
   OMPFLAG = -fopenmp
@@ -15,7 +16,7 @@ else
   OMPFLAG =
 endif
 
-FFLAGS ?= $(OPT) $(OMPFLAG)
+FFLAGS ?= $(OPT) $(OMPFLAG) -J$(MODDIR)
 LDFLAGS ?= $(OMPFLAG)
 
 # Core sources (shared by API build)
@@ -45,7 +46,7 @@ all: hv_orig python
 
 # Original FORTRAN CLI: sources moved under src/cli/, includes modules from src/hvswdpy/_fortran
 hv_orig: src/cli/HV.f90
-	$(FC) $(FFLAGS) -ffree-form -Isrc/hvswdpy/_fortran $< -o bin/hv_orig $(LDFLAGS)
+	$(FC) $(FFLAGS) -ffree-form -I$(MODDIR) $< -o bin/hv_orig $(LDFLAGS)
 
 # Python wrapper: build the hvdfa extension
 python: $(PYTHON_SETUP)
@@ -56,7 +57,7 @@ python: $(PYTHON_SETUP)
 	$(FC) $(FFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o *.mod hv_orig
+	rm -f *.o *.mod bin/hv_orig
 	rm -rf build/
 	rm -f HVSWDpy*.so HVSWDpy-f2pywrappers2.f90 HVSWDpymodule.c
 	rm -f HVSWDpy*.cpython-*.so

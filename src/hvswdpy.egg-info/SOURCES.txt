@@ -1,10 +1,6 @@
 LICENSE
 README.md
 setup.py
-/Users/shihao/Research/Codes/SWD-HV-DFA/HVSWDpy-f2pywrappers2.f90
-/Users/shihao/Research/Codes/SWD-HV-DFA/HVSWDpymodule.c
-/Users/shihao/Research/Codes/SWD-HV-DFA/fortranobject.c
-/Users/shihao/Research/Codes/SWD-HV-DFA/fortranobject.h
 /Users/shihao/Research/Codes/SWD-HV-DFA/src/hvswdpy/_fortran/HVSWDpy-f2pywrappers2.f90
 /Users/shihao/Research/Codes/SWD-HV-DFA/src/hvswdpy/_fortran/HVSWDpymodule.c
 /Users/shihao/Research/Codes/SWD-HV-DFA/src/hvswdpy/_fortran/aux_procedures.f90

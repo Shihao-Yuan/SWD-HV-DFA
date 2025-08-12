@@ -38,7 +38,7 @@ def read_model(path):
 
 def run_cli(model_file, nf=100, fmin=0.1, fmax=100.0, nmr=3, nml=3, prec=1.0, nks=0):
     # One run for dispersion (-ph) creates Rph.dat/Lph.dat; capture HV to HV.dat
-    hv_orig = ROOT / 'hv_orig'
+    hv_orig = ROOT / 'bin' / 'hv_orig'
     cmd = [
         str(hv_orig),
         '-f', str(model_file),
