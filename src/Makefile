@@ -8,7 +8,9 @@
 FC=gfortran
 OPT ?= -O2
 USE_OPENMP ?= 1
-MODDIR = src/hvswdpy/_fortran
+# From within src/, module dir is relative and bin is at repo root
+MODDIR = hvswdpy/_fortran
+BINDIR = ../bin
 
 ifeq ($(USE_OPENMP),1)
   OMPFLAG = -fopenmp
@@ -44,21 +46,25 @@ PYTHON_SETUP = setup.py
 # Build both targets
 all: hv_orig python
 
-# Original FORTRAN CLI: sources moved under src/cli/, includes modules from src/hvswdpy/_fortran
-hv_orig: src/cli/HV.f90
-	$(FC) $(FFLAGS) -ffree-form -I$(MODDIR) $< -o bin/hv_orig $(LDFLAGS)
+# Original FORTRAN CLI: sources are under src/cli/, includes modules from hvswdpy/_fortran
+hv_orig: cli/HV.f90
+	$(FC) $(FFLAGS) -ffree-form -I$(MODDIR) $< -o $(BINDIR)/hv_orig $(LDFLAGS)
 
-# Python wrapper: build the hvdfa extension
-python: $(PYTHON_SETUP)
-	$(PYTHON) $(PYTHON_SETUP) build_ext --inplace
+# Python wrapper: build the hvdfa extension using setup.py here
+python:
+	$(PYTHON) setup.py build_ext --inplace
+
+# Editable (dev) install into the active environment
+python-dev:
+	$(PYTHON) -m pip install -e .
 
 # Generic compile rule (for manual Fortran compilation if needed)
 %.o: %.f90
 	$(FC) $(FFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o *.mod bin/hv_orig
-	rm -rf build/
+	rm -f *.o *.mod $(BINDIR)/hv_orig
+	rm -rf build/ ../build/
 	rm -f HVSWDpy*.so HVSWDpy-f2pywrappers2.f90 HVSWDpymodule.c
 	rm -f HVSWDpy*.cpython-*.so
 	rm -r __pycache__

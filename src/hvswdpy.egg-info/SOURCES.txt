@@ -1,6 +1,6 @@
-LICENSE
-README.md
 setup.py
+./hvswdpy/__init__.py
+./hvswdpy/hvswdpy.py
 /Users/shihao/Research/Codes/SWD-HV-DFA/src/hvswdpy/_fortran/HVSWDpy-f2pywrappers2.f90
 /Users/shihao/Research/Codes/SWD-HV-DFA/src/hvswdpy/_fortran/HVSWDpymodule.c
 /Users/shihao/Research/Codes/SWD-HV-DFA/src/hvswdpy/_fortran/aux_procedures.f90
@@ -16,9 +16,7 @@ setup.py
 /Users/shihao/Research/Codes/SWD-HV-DFA/src/hvswdpy/_fortran/modules.f90
 /Users/shihao/Research/Codes/SWD-HV-DFA/src/hvswdpy/_fortran/rayleigh_mode.f90
 /Users/shihao/Research/Codes/SWD-HV-DFA/src/hvswdpy/_fortran/root_solver.f90
-src/hvswdpy/__init__.py
-src/hvswdpy/hvswdpy.py
-src/hvswdpy.egg-info/PKG-INFO
-src/hvswdpy.egg-info/SOURCES.txt
-src/hvswdpy.egg-info/dependency_links.txt
-src/hvswdpy.egg-info/top_level.txt
+hvswdpy.egg-info/PKG-INFO
+hvswdpy.egg-info/SOURCES.txt
+hvswdpy.egg-info/dependency_links.txt
+hvswdpy.egg-info/top_level.txt

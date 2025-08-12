@@ -10,9 +10,12 @@ import matplotlib.pyplot as plt
 SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT = SCRIPT_DIR.parent
 
-# Import wrapper from project root
-sys.path.insert(0, str(ROOT))
-import hvswdpy as hv
+# Import wrapper: prefer installed package; else fall back to source in ../src
+try:
+    import hvswdpy as hv  # type: ignore
+except ModuleNotFoundError:
+    sys.path.insert(0, str(ROOT / 'src'))
+    import hvswdpy as hv  # type: ignore
 
 
 def read_model(path):
@@ -104,7 +107,7 @@ def main():
     freq = np.logspace(np.log10(fmin), np.log10(fmax), nf)
 
     # Run CLI
-    # run_cli(model_file, nf=nf, fmin=fmin, fmax=fmax, nmr=nmr, nml=nml, prec=prec, nks=nks)
+    run_cli(model_file, nf=nf, fmin=fmin, fmax=fmax, nmr=nmr, nml=nml, prec=prec, nks=nks)
     # Read CLI HV
     f_cli, hv_cli = read_cli_hv(SCRIPT_DIR / 'HV.dat')
     # Read CLI dispersion

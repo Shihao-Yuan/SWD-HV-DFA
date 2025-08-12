@@ -54,7 +54,7 @@ extra_compile_args.append("-ffree-form")
 if _bool_env("DEBUG_F2PY", False):
     extra_compile_args.extend(["-O0", "-g", "-fcheck=all", "-fbacktrace"]) 
 
-FORTRAN_DIR = ROOT / "src" / "hvswdpy" / "_fortran"
+FORTRAN_DIR = ROOT / "hvswdpy" / "_fortran"
 
 ext = Extension(
     name="HVSWDpy",
@@ -72,7 +72,7 @@ setup(
     author="Shihao Yuan",
     author_email="syuan@mines.edu",
     url="",
-    package_dir={"": "src"},
+    package_dir={"": "."},
     packages=["hvswdpy"],
     ext_modules=[ext],
     include_package_data=True,

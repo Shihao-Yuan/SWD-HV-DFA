@@ -24,17 +24,21 @@ dispersion and components.
 - macOS/Linux (tested on macOS ARM with Conda)
 
 ### Build / Install
-- Original CLI only:
+- From `src/` (recommended):
+  - Original CLI:
+    ```bash
+    cd src
+    make hv_orig         # builds ../bin/hv_orig
+    ```
+  - Python extension and wrapper:
+    ```bash
+    cd src
+    make python          # builds extension in place via setup.py in repo root
+    ```
+- From `src/` as an alternative (Python build only):
   ```bash
-  make hv_orig
-  ```
-- Python extension and wrapper (recommended):
-  ```bash
-  # Option A: Makefile convenience
-  make python
-
-  # Option B: pip install from source
-  python -m pip install .
+  cd src
+  python -m pip install -e .  # editable install using setup.py in src/
   ```
 
 Build options (env vars):
