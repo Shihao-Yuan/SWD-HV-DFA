@@ -45,7 +45,7 @@ all: hv_orig python
 
 # Original FORTRAN CLI: sources moved under src/cli/, includes modules from src/hvswdpy/_fortran
 hv_orig: src/cli/HV.f90
-	$(FC) $(FFLAGS) -ffree-form -Isrc/hvswdpy/_fortran $< -o $@ $(LDFLAGS)
+	$(FC) $(FFLAGS) -ffree-form -Isrc/hvswdpy/_fortran $< -o bin/hv_orig $(LDFLAGS)
 
 # Python wrapper: build the hvdfa extension
 python: $(PYTHON_SETUP)
