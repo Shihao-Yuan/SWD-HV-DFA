@@ -17,7 +17,7 @@ dispersion and components.
 - `examples/results/`: output plots
 
 ### Requirements
-- gfortran (OpenMP-capable recommended)
+- gfortran 
 - Python 3.9+ with NumPy
 - macOS/Linux (tested on macOS ARM with Conda)
 
@@ -26,22 +26,18 @@ dispersion and components.
   - Original CLI:
     ```bash
     cd src
-    make hv_orig         # builds ../bin/hv_orig
+    make hv_orig        
     ```
   - Python extension and wrapper:
     ```bash
     cd src
     make python          
     ```
-- From `src/` as an alternative (Python build only):
+- From `src/` as an alternative:
   ```bash
   cd src
   python -m pip install -e .  
   ```
-
-Build options (env vars):
-- `USE_OPENMP=0|1` (default 1) to disable/enable OpenMP in Fortran
-- `DEBUG_F2PY=1` to add debug flags (`-O0 -g -fcheck=all -fbacktrace`)
 
 ### Model format (API)
 - API arrays:
@@ -54,14 +50,14 @@ Build options (env vars):
 ### Original CLI usage
 ```bash
 # Build from src/
-cd src && make hv_orig   # creates ../bin/hv_orig
+cd src && make hv_orig  
 
 # Run from repo root
 bin/hv_orig -f examples/model.txt -fmin 0.1 -fmax 100 -nf 100 -logsam -nmr 3 -nml 3 -prec 1.0 -nks 0 -ph -hv > examples/HV.dat
 # Outputs in examples/: Rph.dat (Rayleigh slowness), Lph.dat (Love slowness), HV.dat (freq, hv)
 ```
 
-### Python API (no normalization; matches CLI default)
+### Python API 
   ```python
   import numpy as np
   import hvswdpy as hv
@@ -91,6 +87,7 @@ bin/hv_orig -f examples/model.txt -fmin 0.1 -fmax 100 -nf 100 -logsam -nmr 3 -nm
   )
   mask = (disp.rayleigh_valid[:, 0] != 0)
   rayleigh_vel_mode1 = 1.0 / disp.rayleigh_slowness[mask, 0]
+  ```
 
 Troubleshooting imports in notebooks:
 - If running from a subfolder (e.g., `examples/`), make sure the project root is on `sys.path` or `PYTHONPATH` so `import hvswdpy` works:
@@ -100,7 +97,6 @@ Troubleshooting imports in notebooks:
   if ROOT not in sys.path:
       sys.path.insert(0, ROOT)
   import hvswdpy
-  ```
   ```
 
 ### Examples
