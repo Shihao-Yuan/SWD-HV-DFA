@@ -6,16 +6,16 @@ from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Paths
+
 SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT = SCRIPT_DIR.parent
 
-# Import wrapper: prefer installed package; else fall back to source in ../src
+
 try:
-    import hvswdpy as hv  # type: ignore
+    import hvswdpy as hv  
 except ModuleNotFoundError:
     sys.path.insert(0, str(ROOT / 'src'))
-    import hvswdpy as hv  # type: ignore
+    import hvswdpy as hv  
 
 
 def read_model(path):
@@ -88,7 +88,7 @@ def read_cli_dispersion(path):
 
 
 def main():
-    # Inputs
+    
     model_file = SCRIPT_DIR / 'model.txt'
     nf = 100
     fmin, fmax = 0.1, 10.0
@@ -103,26 +103,26 @@ def main():
     # Read model
     vp, vs, rho, th = read_model(model_file)
 
-    # Frequencies (log spaced to match -logsam)
+    
     freq = np.logspace(np.log10(fmin), np.log10(fmax), nf)
 
-    # Run CLI
+    
     run_cli(model_file, nf=nf, fmin=fmin, fmax=fmax, nmr=nmr, nml=nml, prec=prec, nks=nks)
-    # Read CLI HV
+    
     f_cli, hv_cli = read_cli_hv(SCRIPT_DIR / 'HV.dat')
-    # Read CLI dispersion
+    
     r_sl_cli, r_va_cli = read_cli_dispersion(SCRIPT_DIR / 'Rph.dat')
     l_sl_cli, l_va_cli = (None, None)
     if (SCRIPT_DIR / 'Lph.dat').exists():
         l_sl_cli, l_va_cli = read_cli_dispersion(SCRIPT_DIR / 'Lph.dat')
 
-    # Python API HV (wrapper infers sizes)
+
     hv_py, status_hv = hv.hv(
         frequencies_hz=freq,
         vp=vp, vs=vs, rho=rho, thickness=th,
         n_rayleigh_modes=nmr, n_love_modes=nml, precision_percent=prec, nks=nks)
 
-    # Python API dispersion (wrapper returns a NamedTuple)
+
     disp = hv.dispersion(
         frequencies_hz=freq,
         vp=vp, vs=vs, rho=rho, thickness=th,
@@ -133,7 +133,6 @@ def main():
     l_va_py = disp.love_valid
     status_dp = disp.status
 
-    # Align HV (freq should match with -logsam)
     if not np.allclose(f_cli, freq):
         hv_py_plot = np.interp(f_cli, freq, hv_py)
         f_plot = f_cli
@@ -155,9 +154,9 @@ def main():
     hv_png = results_dir / 'compare_hv.png'
     plt.savefig(str(hv_png), dpi=150)
 
-    # Dispersion plot (Rayleigh) — convert slowness (s/m) to phase velocity (m/s)
+ 
     fig, ax = plt.subplots(1, 2, figsize=(14, 6), sharex=True, sharey=True)
-    # CLI Rayleigh scatter per mode
+
     colors = ['C0', 'C1', 'C2', 'C3', 'C4']
     nm_ray = r_sl_cli.shape[0]
     for im in range(nm_ray):
@@ -172,7 +171,6 @@ def main():
     if nm_ray > 0:
         ax[0].legend(title='Modes', fontsize=8)
 
-    # API Rayleigh scatter per mode
     nm_ray_py = r_sl_py.shape[1]
     for im in range(nm_ray_py):
         mask = (r_va_py[:, im] != 0)
@@ -189,7 +187,6 @@ def main():
     ray_png = results_dir / 'compare_rayleigh_dispersion.png'
     plt.savefig(str(ray_png), dpi=150)
 
-    # Dispersion plot (Love) if available — convert to phase velocity
     if l_sl_cli is not None:
         fig, ax = plt.subplots(1, 2, figsize=(14, 6), sharex=True, sharey=True)
         nm_lov = l_sl_cli.shape[0]
@@ -223,7 +220,6 @@ def main():
     else:
         lov_png = None
 
-    # Print brief comparison summary
     py_valid = int(np.sum(r_va_py != 0))
     cli_valid = int(np.sum(r_va_cli))
     print('Rayleigh valid points: API =', py_valid, ', CLI =', cli_valid)
