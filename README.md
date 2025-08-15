@@ -7,6 +7,9 @@ dispersion and components.
 - **Original authors**: HV‑INV project team (see headers in `HV.f90`)
 - **Modifications and API**: Shihao Yuan (`syuan@mines.edu`)
 
+### DISCLAIMER:
+This is a development build. The code is incomplete and may contain errors, unstable functionality, or placeholders. Contributions and feedback are welcome.
+
 ### Repository layout
 - `src/hvswdpy/`: Python package (wrapper)
 - `src/hvswdpy/_fortran/`: Fortran sources and f2py interface (`hvdfa.pyf`)
