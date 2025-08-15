@@ -1,9 +1,8 @@
 ! ======================================================================================
 ! HV-DFA API module
-! Modern Fortran API (hv_compute, hv_components) wrapping the original HV-DFA routines.
+! Fortran API (hv_compute, hv_components) wrapping the original HV-DFA routines.
 ! Algorithms follow the original implementation (Sanchez-Sesma et al., HV-INV team).
 ! 
-! Original authorship and attribution preserved in source files and HV.f90 header.
 ! Modifications and API by: Shihao Yuan (syuan@mines.edu)
 ! ======================================================================================
 module hv_dfa_api
@@ -509,8 +508,6 @@ contains
     G_OMEGA = 0.05_long_float  ! Initial value for polarity calculation
     G_POLARITY = 0.0_long_float
     G_X2 = 0.0_long_float
-    
-    ! Debug prints removed
     
     ok = .true.
     

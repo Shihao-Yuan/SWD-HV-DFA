@@ -1,6 +1,6 @@
 ! ======================================================================================
-! Minimal CLI driver for HV-DFA API
-! Reads 'model.txt', computes H/V via hv_compute, writes 'results/HV_api.dat'.
+! CLI for HV-DFA
+! Reads 'model.txt', computes H/V via hv_compute.
 ! Original algorithm by HV-INV team; API driver by Shihao Yuan (syuan@mines.edu).
 ! ======================================================================================
 program api_driver
@@ -57,8 +57,6 @@ program api_driver
   allocate(f(nf), hv(nf))
   call build_logspace(0.1_long_float, 10.0_long_float, nf, f)
 
-  
-
   ! Final H/V only
   call hv_compute(f, vp, vs, rho, h, hv, n_rayleigh_modes=20, n_love_modes=20, precision_percent=1.0e-4, nks=200, status=status)
   call ensure_results_dir()
@@ -68,8 +66,6 @@ program api_driver
   end do
   close(13)
   print *, 'Wrote results/HV_api.dat'
-
-  ! (No component dumps)
 
 contains
 
@@ -94,8 +90,6 @@ contains
     implicit none
     call execute_command_line('mkdir -p results')
   end subroutine ensure_results_dir
-
-  ! (No local dump helpers)
 
 end program api_driver
 

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 """
-High-level Python wrapper for the HV-SWD-DFA Fortran extension.
+Python wrapper for the HV-SWD-DFA Fortran extension.
 
 Author (modifications and API): Shihao Yuan <syuan@mines.edu>
 Original authorship for the Fortran algorithms is retained in the

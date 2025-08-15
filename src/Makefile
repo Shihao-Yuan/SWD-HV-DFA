@@ -8,7 +8,7 @@
 FC=gfortran
 OPT ?= -O2
 USE_OPENMP ?= 1
-# From within src/, module dir is relative and bin is at repo root
+
 MODDIR = hvswdpy/_fortran
 BINDIR = ../bin
 
@@ -54,11 +54,11 @@ hv_orig: cli/HV.f90
 python:
 	$(PYTHON) setup.py build_ext --inplace
 
-# Editable (dev) install into the active environment
+# Python wrapper:  install into the active environment
 python-dev:
 	$(PYTHON) -m pip install -e .
 
-# Generic compile rule (for manual Fortran compilation if needed)
+# Generic compile rule for manual Fortran compilation
 %.o: %.f90
 	$(FC) $(FFLAGS) -c $< -o $@
 
@@ -67,5 +67,4 @@ clean:
 	rm -rf build/ ../build/
 	rm -f HVSWDpy*.so HVSWDpy-f2pywrappers2.f90 HVSWDpymodule.c
 	rm -f HVSWDpy*.cpython-*.so
-	rm -r __pycache__
 
