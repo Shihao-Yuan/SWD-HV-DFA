@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: hvswdpy
+Version: 0.1.0
+Summary: HV-SWD-DFA Fortran API and Python wrapper for dispersion and H/V
+Home-page: 
+Author: Shihao Yuan
+Author-email: syuan@mines.edu

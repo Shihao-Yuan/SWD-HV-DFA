@@ -1,0 +1,51 @@
+python module HVSWDpy
+  interface
+    module hv_dfa_api
+
+      subroutine hv_compute_f2py(nf, nl, frequencies_hz, vp_in, vs_in, rho_in, thickness_in, hv_out, n_rayleigh_modes, n_love_modes, precision_percent, nks, sh_damp, psv_damp, status)
+        integer intent(in) :: nf, nl
+        double precision intent(in),  dimension(nf) :: frequencies_hz
+        double precision intent(in),  dimension(nl) :: vp_in, vs_in, rho_in
+        double precision intent(in),  dimension(nl-1) :: thickness_in
+        double precision intent(out), dimension(nf) :: hv_out
+        integer optional, intent(in) :: n_rayleigh_modes, n_love_modes, nks
+        real    optional, intent(in) :: precision_percent
+        double precision optional, intent(in) :: sh_damp, psv_damp
+        integer optional, intent(out) :: status
+      end subroutine hv_compute_f2py
+
+      subroutine hv_compute_components_f2py(nf, nl, frequencies_hz, vp_in, vs_in, rho_in, thickness_in, &
+                                       img11_pihalf_total, img33_total, &
+                                       img11_pihalf_rayleigh, img11_pihalf_love, &
+                                       imvv, imhpsv, imhsh, &
+                                       n_rayleigh_modes, n_love_modes, precision_percent, nks, status)
+        integer intent(in) :: nf, nl
+        double precision intent(in),  dimension(nf) :: frequencies_hz
+        double precision intent(in),  dimension(nl) :: vp_in, vs_in, rho_in
+        double precision intent(in),  dimension(nl-1) :: thickness_in
+        double precision intent(out), dimension(nf) :: img11_pihalf_total, img33_total
+        double precision intent(out), dimension(nf) :: img11_pihalf_rayleigh, img11_pihalf_love
+        double precision intent(out), dimension(nf) :: imvv, imhpsv, imhsh
+        integer optional, intent(in) :: n_rayleigh_modes, n_love_modes, nks
+        real    optional, intent(in) :: precision_percent
+        integer optional, intent(out) :: status
+      end subroutine hv_compute_components_f2py
+
+      subroutine hv_compute_dispersion_f2py(nf, nl, frequencies_hz, vp_in, vs_in, rho_in, thickness_in, &
+                                           rayleigh_slowness, rayleigh_valid, love_slowness, love_valid, &
+                                           n_rayleigh_modes, n_love_modes, precision_percent, status)
+        integer intent(in) :: nf, nl, n_rayleigh_modes, n_love_modes
+        double precision intent(in),  dimension(nf) :: frequencies_hz
+        double precision intent(in),  dimension(nl) :: vp_in, vs_in, rho_in
+        double precision intent(in),  dimension(nl-1) :: thickness_in
+        double precision intent(out), dimension(nf, n_rayleigh_modes) :: rayleigh_slowness
+        logical intent(out), dimension(nf, n_rayleigh_modes) :: rayleigh_valid
+        double precision intent(out), dimension(nf, n_love_modes) :: love_slowness
+        logical intent(out), dimension(nf, n_love_modes) :: love_valid
+        real    optional, intent(in) :: precision_percent
+        integer optional, intent(out) :: status
+      end subroutine hv_compute_dispersion_f2py
+
+    end module hv_dfa_api
+  end interface
+end python module HVSWDpy
