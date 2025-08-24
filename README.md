@@ -1,14 +1,12 @@
-## HV-SWD-DFA: H/V Spectral Ratio and Dispersion Modeling (Diffuse Wavefield Assumption)
+## HV-SWD-DFA: H/V Spectral Ratio and Surface Wave Dispersion Modeling (Diffuse Wavefield Assumption)
 
-Fortran implementation of H/V spectral ratio and surface-wave dispersion, with a thin Python wrapper. The
-Python API mirrors the original CLI behavior (no normalization) and offers simple functions for HV, 
-dispersion and components.
+Fortran implementation of H/V spectral ratio and surface-wave dispersion, with a thin Python wrapper. The Python API mirrors the original CLI and offers simple functions.
 
 - **Original authors**: HV‑INV project team (see headers in `HV.f90`)
 - **Modifications and API**: Shihao Yuan (`syuan@mines.edu`)
 
 ### DISCLAIMER:
-This is a development build. The code is incomplete and may contain errors, unstable functionality, or placeholders. Contributions and feedback are welcome.
+This is a development build. The code may contain errors or unstable functionality. Contributions and feedback are welcome.
 
 ### Repository layout
 - `src/hvswdpy/`: Python package (wrapper)
@@ -109,24 +107,12 @@ Troubleshooting imports in notebooks:
   ```
 - Compare HV and dispersion (CLI vs API) — generates plots into `examples/results/`:
   ```bash
-  python examples/compare_model_both.py
+  python examples/compare_API_CLI.py
   ```
   - `examples/results/compare_hv.png`
   - `examples/results/compare_rayleigh_dispersion.png` (phase velocity vs frequency)
   - `examples/results/compare_love_dispersion.png` (if Love modes requested)
 
-- Bayesian inversion (BayesBay) example notebook:
-  - `examples/BayesBay/BayesBay.ipynb` : demonstrates joint inversion of Rayleigh
-    dispersion and HVSR using a Voronoi1D Vs model.
-  - Notes:
-    - Use `from bayesbay.likelihood import Target, LogLikelihood` (current BayesBay API)
-    - Forward functions must pass `thickness[:-1]` (exclude halfspace)
-    - To keep output quiet during long runs: set `verbose=False` in `inv.run(...)`
-    - When running from the notebook folder, add the project root to `sys.path` (see snippet above)
-
-### Notes
-- f2py auto-generated files are build artifacts; don’t edit or commit.
-- `make clean` removes executables, build artifacts, and Python extension outputs.
 
 ### License
 This project is licensed under the MIT License. See `LICENSE` for details.
