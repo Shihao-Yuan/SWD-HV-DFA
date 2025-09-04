@@ -101,13 +101,9 @@ Troubleshooting imports in notebooks:
   ```
 
 ### Examples
-- Quickstart (HV):
-  ```bash
-  python examples/hv_quickstart.py
-  ```
 - Compare HV and dispersion (CLI vs API) — generates plots into `examples/results/`:
   ```bash
-  python examples/compare_API_CLI.py
+  jupyter notebook examples/compare_API_CLI.ipynb
   ```
   - `examples/results/compare_hv.png`
   - `examples/results/compare_rayleigh_dispersion.png` (phase velocity vs frequency)
