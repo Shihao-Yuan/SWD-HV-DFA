@@ -21,11 +21,10 @@ endif
 FFLAGS ?= $(OPT) $(OMPFLAG) -J$(MODDIR)
 LDFLAGS ?= $(OMPFLAG)
 
-# Core sources (shared by API build)
+# Core sources 
 SRCS_COMMON = \
   modules.f90 \
   aux_procedures.f90 \
-  Dispersion.f90 \
   root_solver.f90 \
   dispersion_solver.f90 \
   dispersion_equation.f90 \
@@ -41,7 +40,7 @@ OBJS_COMMON = $(SRCS_COMMON:.f90=.o)
 PYTHON ?= python3
 PYTHON_SETUP = setup.py
 
-.PHONY: all clean python
+.PHONY: all clean python python-dev hv_orig
 
 # Build both targets
 all: hv_orig python

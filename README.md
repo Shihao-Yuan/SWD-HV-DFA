@@ -18,8 +18,8 @@ This is a development build. The code may contain errors or unstable functionali
 - `examples/results/`: output plots
 
 ### Requirements
-- gfortran 
-- Python 3.9+ with NumPy
+- gfortran (install via conda: `conda install -c conda-forge gfortran_linux-64` for Linux or `gfortran_osx-arm64`/`gfortran_osx-64` for macOS)
+- Python 3.9+ with NumPy 1.20+ or NumPy 2.x (tested with NumPy 1.25.2 and 2.2.6)
 - macOS/Linux (tested on macOS ARM with Conda)
 
 ### Build / Install
@@ -34,11 +34,20 @@ This is a development build. The code may contain errors or unstable functionali
     cd src
     make python          
     ```
-- From `src/` as an alternative:
+- Install as editable package (alternative):
   ```bash
+  conda activate your conda environment
   cd src
-  python -m pip install -e .  
+  pip install -e .
   ```
+
+**Note**: If you encounter NumPy compatibility issues (e.g., `numpy.core.multiarray failed to import`), rebuild the extension with your current NumPy version:
+```bash
+cd src
+rm -f hvswdpy/HVSWDpy*.so
+python setup.py build_ext --inplace
+```
+
 
 ### Model format (API)
 - API arrays:

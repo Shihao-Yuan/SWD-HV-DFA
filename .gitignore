@@ -15,3 +15,5 @@ HVSWDpymodule.c
 fortranobject.c
 fortranobject.h
 examples/results/**
+*.egg-info
+dist/

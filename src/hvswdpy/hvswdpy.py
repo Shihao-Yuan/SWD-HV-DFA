@@ -12,7 +12,7 @@ from typing import NamedTuple, Optional, Tuple
 
 import numpy as np
 
-from HVSWDpy import hv_dfa_api as _api
+from .HVSWDpy import hv_dfa_api as _api
 
 
 class HVComponents(NamedTuple):

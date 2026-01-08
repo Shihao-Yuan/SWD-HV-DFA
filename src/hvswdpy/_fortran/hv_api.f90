@@ -520,7 +520,6 @@ contains
       VALUES_R = 0.0; VALID_R = .false.
       ISRAYLEIGH = .true.
       ok = DISPERSION(VALUES_R, VALID_R)
-      ! Debug prints removed
       
       ! Copy results to output arrays (with normalization)
       do imode = 1, nm_rayleigh_eff
