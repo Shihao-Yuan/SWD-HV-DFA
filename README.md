@@ -23,31 +23,60 @@ This is a development build. The code may contain errors or unstable functionali
 - macOS/Linux (tested on macOS ARM with Conda)
 
 ### Build / Install
-- From `src/` (recommended):
-  - Original CLI:
-    ```bash
-    cd src
-    make hv_orig        
-    ```
-  - Python extension and wrapper:
-    ```bash
-    cd src
-    make python          
-    ```
-- Install as editable package (alternative):
-  ```bash
-  conda activate your conda environment
-  cd src
-  pip install -e .
-  ```
 
-**Note**: If you encounter NumPy compatibility issues (e.g., `numpy.core.multiarray failed to import`), rebuild the extension with your current NumPy version:
+#### Prerequisites
+1. Install gfortran:
+   - **Linux**: `conda install -c conda-forge gfortran_linux-64`
+   - **macOS (ARM)**: `conda install -c conda-forge gfortran_osx-arm64`
+   - **macOS (Intel)**: `conda install -c conda-forge gfortran_osx-64`
+   - Or use your system package manager (e.g., `apt-get install gfortran` on Ubuntu/Debian)
+
+2. Activate your conda environment (if using conda):
+   ```bash
+   conda activate your_environment
+   ```
+
+#### Option 1: Build Original Fortran CLI Only
 ```bash
 cd src
-rm -f hvswdpy/HVSWDpy*.so
-python setup.py build_ext --inplace
+make hv_orig
 ```
+This creates the executable at `bin/hv_orig`.
 
+#### Option 2: Build Python Extension (In-place, Recommended for Development)
+```bash
+cd src
+make python
+```
+This builds the Python extension in-place without installing the package. Useful for testing changes.
+
+#### Option 3: Install as Editable Package (Recommended for Regular Use)
+```bash
+cd src
+make python-dev
+```
+This installs the package in editable mode and builds the compiled extensions. The package will be available system-wide in your Python environment.
+
+#### Option 4: Build Everything
+```bash
+cd src
+make all
+```
+This builds both the CLI executable and Python extension.
+
+#### Build Options
+
+You can customize the build behavior using environment variables:
+
+- **Disable OpenMP** (if you encounter OpenMP-related issues):
+  ```bash
+  USE_OPENMP=0 make python-dev
+  ```
+
+- **Custom optimization level**:
+  ```bash
+  OPT=-O3 make python-dev
+  ```
 
 ### Model format (API)
 - API arrays:
