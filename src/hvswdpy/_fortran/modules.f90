@@ -11,8 +11,6 @@
       complex(long_cmplx),parameter::i=(0.0_long_float,1.0_long_float)
       real(long_float),parameter::pi=3.1415926535897932384626433832795_long_float
       real(long_float),parameter::twopi=2.0_long_float*pi
-      !logical SHOW_PH,SHOW_GR,SHOW_HV
-      !integer TO_STD ! which output goes to the standard output; 0=report 1=phase 2=group 3=hv
       INTEGER UNIT_RDPGS(5) ! Units for: Report, Debug, Phase-vel., Group-vel., Spectra
       REAL(long_float) SHDAMP,PSVDAMP
       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

@@ -19,27 +19,16 @@
       exposQacum=0
       AuxMtrx=0
       expo=0
-!     L=0
       interfaz_fuente=1
       Integral=0
       Integralmu=0
       index=ncapas
-!      IF SLOW.NE.REAL(G_SLOWS(index),KIND=long_float)
-        nu=nu_val_from_slow(SLOW,W,REAL(G_SLOWS(index),KIND=long_float))
-
-!      ELSE
-        
-!      ENDIF        
-!     IF(REAL(NU)<=0)THEN
-
-!       READ(*,*)
-!     ENDIF
+      nu=nu_val_from_slow(SLOW,W,REAL(G_SLOWS(index),KIND=long_float))
       exposEinvInt(index)=0            
       call LmatrixSH(L(:,:,index), mu(index),nu)
       D=(/1,0/)
       Y=matmul(L(:,:,index),D)
       AuxMtrx(1,1,index)=-1/(-nu+conjg(-nu))
-      !AuxMtrx(:,:,index)=matmul1x1(D,conjg(D))*AuxMtrx(:,:,index)
       do index=ncapas-1,1,-1
         nu=nu_val_from_slow(SLOW,W,REAL(G_SLOWS(index),KIND=long_float))
         call LmatrixSH(L(:,:,index), mu(index),nu)

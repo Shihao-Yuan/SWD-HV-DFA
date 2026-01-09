@@ -89,20 +89,12 @@ do index=ncapas-1,1,-1
   exp(-expo_prov1-expo_prov2)
   exposEinvInt(:,index)=(/2*expo_prov1,2*expo_prov2,expo_prov1+expo_prov2/)     
   
-! deno=reshape((/-gam+conjg(-gam),-gam+conjg(-nu),-gam+conjg(gam),-gam+conjg(nu),-nu+conjg(-gam),-nu+conjg(-nu),&
-!      -nu+conjg(gam),-nu+conjg(nu),gam+conjg(-gam),gam+conjg(-nu),gam+conjg(gam),gam+conjg(nu),nu+conjg(-gam),nu+conjg(-nu),&
-!       nu+conjg(gam),nu+conjg(nu)/),(/4,4/),ORDER=(/2,1/))
-
   deno(1,1)=-2*real(gam);    deno(1,2)=-gam-conjg(nu);deno(1,3)=-2*aimag(gam)*I;  deno(1,4)=-gam+conjg(nu)
   deno(2,1)=conjg(deno(1,2));deno(2,2)=-2*real(nu);   deno(2,3)=-conjg(deno(1,4));deno(2,4)=-2*aimag(nu)*I
   deno(3,1)=-deno(1,3);      deno(3,2)=-deno(1,4);    deno(3,3)=-deno(1,1);       deno(3,4)=-deno(1,2)
   deno(4,1)=-deno(2,3);      deno(4,2)=-deno(2,4);    deno(4,3)=-deno(2,1);       deno(4,4)=-deno(2,2)
         
-!facD=reshape((/gam*conjg(gam),gam*conjg(nu),-gam*conjg(gam),-gam*conjg(nu),nu*conjg(gam),nu*conjg(nu),&
-!     -nu*conjg(gam),-nu*conjg(nu),-gam*conjg(gam),-gam*conjg(nu),gam*conjg(gam),gam*conjg(nu),-nu*conjg(gam),-nu*conjg(nu),&
-!      nu*conjg(gam),nu*conjg(nu)/),(/4,4/),ORDER=(/2,1/))       
-
- facD(1,1)=gam*conjg(gam);  facD(1,2)=gam*conjg(nu);facD(1,3)=-facD(1,1);facD(1,4)=-facD(1,2);
+  facD(1,1)=gam*conjg(gam);  facD(1,2)=gam*conjg(nu);facD(1,3)=-facD(1,1);facD(1,4)=-facD(1,2);
  facD(2,1)=conjg(facD(1,2));facD(2,2)=nu*conjg(nu); facD(2,3)=-facD(2,1);facD(2,4)=-facD(2,2);
  facD(3,1)=facD(1,3);       facD(3,2)=facD(1,4);    facD(3,3)=facD(1,1); facD(3,4)=facD(1,2);
  facD(4,1)=facD(2,3);       facD(4,2)=facD(2,4);    facD(4,3)=facD(2,1); facD(4,4)=facD(2,2);

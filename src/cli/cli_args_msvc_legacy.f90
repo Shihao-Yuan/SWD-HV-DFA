@@ -280,7 +280,6 @@
         ! READ FREQUENCY FILE
         INQUIRE(FILE=FREQFILE,EXIST=ISFREQFILE)
         IF(ISFREQFILE)THEN
-!         print*,'vamos a cargar archivo frecuencias'
           OPEN(3,file=FREQFILE,form='formatted')
           REWIND 3
           IF(G_NX==-1)THEN ! X has not been allocated yet
@@ -305,9 +304,6 @@
           ENDDO
           IF(INDX<G_NX)G_NX=INDX-1          
           CLOSE(3)
-          !WRITE(*,*)'volcado lista frecuencias'
-          !WRITE(*,*)(INDXX,X(INDXX),INDXX=1,G_NX)
-          !WRITE(*,*)'fin, G_NX=',G_NX
           X=TWOPI*X
         ELSE
           WRITE(*,*)'Missing frequency file'

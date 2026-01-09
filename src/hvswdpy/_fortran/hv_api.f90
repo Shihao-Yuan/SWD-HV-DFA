@@ -445,7 +445,7 @@ contains
     real(long_float), intent(in)  :: vp_in(nl), vs_in(nl), rho_in(nl)
     real(long_float), intent(in)  :: thickness_in(nl-1)
     real(long_float), intent(out) :: rayleigh_slowness(nf, n_rayleigh_modes), love_slowness(nf, n_love_modes)
-    logical, intent(out) :: rayleigh_valid(nf, n_rayleigh_modes), love_valid(nf, n_love_modes)
+    integer, intent(out) :: rayleigh_valid(nf, n_rayleigh_modes), love_valid(nf, n_love_modes)
     real,    intent(in),  optional :: precision_percent
     integer, intent(out), optional :: status
     
@@ -463,8 +463,8 @@ contains
     ! Initialize output arrays
     rayleigh_slowness = 0.0_long_float
     love_slowness = 0.0_long_float
-    rayleigh_valid = .false.
-    love_valid = .false.
+    rayleigh_valid = 0
+    love_valid = 0
     
     ! Set up global variables
     UNIT_RDPGS = -1
@@ -521,12 +521,12 @@ contains
       ISRAYLEIGH = .true.
       ok = DISPERSION(VALUES_R, VALID_R)
       
-      ! Copy results to output arrays (with normalization)
+      ! Copy results to output arrays (convert logical to integer: .false. -> 0, .true. -> 1)
       do imode = 1, nm_rayleigh_eff
         do i = 1, G_NX
           j = (imode-1)*G_NX + i
           rayleigh_slowness(i, imode) = VALUES_R(j)
-          rayleigh_valid(i, imode) = VALID_R(j)
+          rayleigh_valid(i, imode) = merge(1, 0, VALID_R(j))
         end do
       end do
       
@@ -542,12 +542,12 @@ contains
       ISRAYLEIGH = .false.
       ok = DISPERSION(VALUES_L, VALID_L) .and. ok
       
-      ! Copy results to output arrays (with normalization)
+      ! Copy results to output arrays (convert logical to integer: .false. -> 0, .true. -> 1)
       do imode = 1, nm_love_eff
         do i = 1, G_NX
           j = (imode-1)*G_NX + i
           love_slowness(i, imode) = VALUES_L(j)
-          love_valid(i, imode) = VALID_L(j)
+          love_valid(i, imode) = merge(1, 0, VALID_L(j))
         end do
       end do
     end if

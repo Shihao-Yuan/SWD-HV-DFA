@@ -2,6 +2,7 @@
 # Build targets:
 #   make hv_orig       - original FORTRAN program 
 #   make python        - Python wrapper (replaces hv_api.exe)
+#   make python-dev    - Python wrapper (editable install)
 #   make all           - both
 #   make clean         - remove build artifacts
 
@@ -43,7 +44,7 @@ PYTHON_SETUP = setup.py
 .PHONY: all clean python python-dev hv_orig
 
 # Build both targets
-all: hv_orig python
+all: hv_orig python python-dev
 
 # Original FORTRAN CLI: sources are under src/cli/, includes modules from hvswdpy/_fortran
 hv_orig: cli/HV.f90
@@ -56,14 +57,18 @@ python:
 # Python wrapper:  install into the active environment
 python-dev:
 	$(PYTHON) -m pip install -e .
+	# Editable install does not build compiled extensions; build them explicitly
+	$(PYTHON) setup.py build_ext --inplace
 
-# Generic compile rule for manual Fortran compilation
+# Manual Fortran compilation
 %.o: %.f90
 	$(FC) $(FFLAGS) -c $< -o $@
 
 clean:
 	rm -f *.o *.mod $(BINDIR)/hv_orig
 	rm -rf build/ ../build/
+	rm -f hvswdpy/_fortran/HVSWDpy-f2pywrappers2.f90 hvswdpy/_fortran/HVSWDpymodule.c
+	rm -f hvswdpy/HVSWDpy*.so hvswdpy/HVSWDpy*.cpython-*.so
 	rm -f HVSWDpy*.so HVSWDpy-f2pywrappers2.f90 HVSWDpymodule.c
 	rm -f HVSWDpy*.cpython-*.so
 

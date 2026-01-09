@@ -39,9 +39,9 @@ python module HVSWDpy
         double precision intent(in),  dimension(nl) :: vp_in, vs_in, rho_in
         double precision intent(in),  dimension(nl-1) :: thickness_in
         double precision intent(out), dimension(nf, n_rayleigh_modes) :: rayleigh_slowness
-        logical intent(out), dimension(nf, n_rayleigh_modes) :: rayleigh_valid
+        integer intent(out), dimension(nf, n_rayleigh_modes) :: rayleigh_valid
         double precision intent(out), dimension(nf, n_love_modes) :: love_slowness
-        logical intent(out), dimension(nf, n_love_modes) :: love_valid
+        integer intent(out), dimension(nf, n_love_modes) :: love_valid
         real    optional, intent(in) :: precision_percent
         integer optional, intent(out) :: status
       end subroutine hv_compute_dispersion_f2py
