@@ -43,11 +43,15 @@ PYTHON_SETUP = setup.py
 
 .PHONY: all clean python python-dev hv_orig
 
+# Ensure BINDIR exists
+$(BINDIR):
+	mkdir -p $(BINDIR)
+
 # Build both targets
 all: hv_orig python python-dev
 
 # Original FORTRAN CLI: sources are under src/cli/, includes modules from hvswdpy/_fortran
-hv_orig: cli/HV.f90
+hv_orig: cli/HV.f90 | $(BINDIR)
 	$(FC) $(FFLAGS) -ffree-form -I$(MODDIR) $< -o $(BINDIR)/hv_orig $(LDFLAGS)
 
 # Python wrapper: build the hvdfa extension using setup.py here
